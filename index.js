@@ -6,28 +6,23 @@ var floors = 15;
 
 var elevatorSize = bounds.height / floors;
 
-var elevator = {
+var driverPower = 0;
+
+elevator = {
   x: 100,
   y: 100
 }
 
-function driveUp(elevator) {
-  var out = elevator;
-  if (elevator.y > 0) {
-    out.y -= 1;
-  }
-  return out;
-}
-
-function driveDown(elevator) {
-  var out = elevator;
-  if (elevator.y < (canvas.height - elevatorSize)) {
-    out.y += 1;
+function tick(e) {
+  var out = e;
+  if ((out.y < (canvas.height - elevatorSize) && driverPower > 0) || (out.y > 0 && driverPower < 0)) {
+    out.y += driverPower;
   }
   return out;
 }
 
 function paintElevator(e) {
+  ctx.clearRect(0,0,canvas.width, canvas.height);
   // floors
   ctx.fillStyle = 'lightgray';
   var floorHeight = bounds.height / floors;
@@ -42,4 +37,30 @@ function paintElevator(e) {
   ctx.fillRect(e.x, e.y, elevatorSize, elevatorSize);
 }
 
-paintElevator(elevator);
+function paint() {
+  paintElevator(elevator);
+}
+
+setInterval(function (){
+  elevator = tick(elevator);
+  paint();
+}, 1/60);
+
+document.onkeydown = function (e) {
+  console.log(e);
+  switch (e.keyCode) {
+    case 78:
+      //n
+      driverPower = 2;
+      break;
+    case 80:
+      // p
+      driverPower = -2;
+      break;
+    default:
+  }
+}
+
+document.onkeyup = function() {
+  driverPower = 0;
+}
