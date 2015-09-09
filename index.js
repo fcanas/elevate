@@ -22,13 +22,6 @@ function tick(e) {
 }
 
 function paintElevator(e) {
-  ctx.clearRect(0,0,canvas.width, canvas.height);
-  // floors
-  ctx.fillStyle = 'lightgray';
-  var floorHeight = bounds.height / floors;
-  for (var f = floors; f > 0; --f) {
-    ctx.fillRect(0, f * floorHeight, bounds.width, 2);
-  }
   // track
   ctx.fillStyle = 'lightgray';
   ctx.fillRect(e.x + Math.floor(elevatorSize/2), 0, 2, bounds.height);
@@ -37,7 +30,18 @@ function paintElevator(e) {
   ctx.fillRect(e.x, e.y, elevatorSize, elevatorSize);
 }
 
+function paintBuilding() {
+  // floors
+  ctx.fillStyle = 'lightgray';
+  var floorHeight = bounds.height / floors;
+  for (var f = floors; f > 0; --f) {
+    ctx.fillRect(0, f * floorHeight, bounds.width, 2);
+  }
+}
+
 function paint() {
+  ctx.clearRect(0,0,canvas.width, canvas.height);
+  paintBuilding();
   paintElevator(elevator);
 }
 
@@ -47,7 +51,6 @@ setInterval(function (){
 }, 1/60);
 
 document.onkeydown = function (e) {
-  console.log(e);
   switch (e.keyCode) {
     case 78:
       //n
