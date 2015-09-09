@@ -65,13 +65,16 @@ setInterval(function (){
 
 document.onkeydown = function (e) {
   switch (e.keyCode) {
-    case 78:
-      //n
+    case 78:// n
+    case 40:// down arrow
       driverPower = 2;
       break;
-    case 80:
-      // p
+    case 80:// p
+    case 38:// up arrow
       driverPower = -2;
+      break;
+    case 32:// space
+      // open door
       break;
     default:
   }
