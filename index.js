@@ -9,16 +9,17 @@ var elevatorSize = bounds.height / floors;
 var driverPower = 0;
 
 // [floor][person] -> target floor
-var meeple = [[4,5,2], [], [9,1], [], [12, 9, 3, 1], [], [], [], [], [2,3,1,1]]
+var meeple = [[4,5,2], [], [9,1], [], [12, 9, 3, 1], [], [], [], [], [2,3,1,1]];
 
 elevator = {
   x: 100,
   y: 100
-}
+};
 
 function tick(e) {
   var out = e;
-  if ((out.y < (canvas.height - elevatorSize) && driverPower > 0) || (out.y > 0 && driverPower < 0)) {
+  if ((out.y < (canvas.height - elevatorSize) && driverPower > 0) ||
+      (out.y > 0 && driverPower < 0)) {
     out.y += driverPower;
   }
   return out;
@@ -27,7 +28,7 @@ function tick(e) {
 function paintElevator(e) {
   // track
   ctx.fillStyle = 'lightgray';
-  ctx.fillRect(e.x + Math.floor(elevatorSize/2), 0, 2, bounds.height);
+  ctx.fillRect(e.x + Math.floor(elevatorSize / 2), 0, 2, bounds.height);
   // car
   ctx.fillStyle = 'black';
   ctx.fillRect(e.x, e.y, elevatorSize, elevatorSize);
@@ -39,7 +40,9 @@ function paintMeeple(mps) {
   for (var f = 0; f < mps.length; ++f) {
     var mm = mps[f];
     for (var m = 0; m < mm.length; ++m) {
-      ctx.arc(elevator.x + elevatorSize + 20 + 15 * m, (bounds.height / floors) * (0.5 + floors - (f + 1)), 5, 0, 2 * Math.PI, false);
+      ctx.arc(elevator.x + elevatorSize + 20 + 15 * m,
+              (bounds.height / floors) * (0.5 + floors - (f + 1)),
+              5, 0, 2 * Math.PI, false);
       ctx.closePath();
       ctx.fill();
     }
@@ -62,12 +65,12 @@ function paint() {
   paintMeeple(meeple);
 }
 
-setInterval(function (){
+setInterval(function() {
   elevator = tick(elevator);
   paint();
-}, 1/60);
+}, 1 / 60);
 
-document.onkeydown = function (e) {
+document.onkeydown = function(e) {
   switch (e.keyCode) {
     case 78:// n
     case 40:// down arrow
@@ -82,8 +85,8 @@ document.onkeydown = function (e) {
       break;
     default:
   }
-}
+};
 
 document.onkeyup = function() {
   driverPower = 0;
-}
+};
