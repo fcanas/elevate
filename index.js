@@ -8,6 +8,9 @@ var elevatorSize = bounds.height / floors;
 
 var driverPower = 0;
 
+// [floor][person] -> target floor
+var meeple = [[4,5,2], [], [9,1], [], [12, 9, 3, 1], [], [], [], [], [2,3,1,1]]
+
 elevator = {
   x: 100,
   y: 100
@@ -30,14 +33,17 @@ function paintElevator(e) {
   ctx.fillRect(e.x, e.y, elevatorSize, elevatorSize);
 }
 
-function paintMeeple(floor, number) {
+function paintMeeple(mps) {
   ctx.fillStyle = 'red';
   ctx.beginPath();
-  for (var m = 0; m < number; ++m) {
-    ctx.arc(elevator.x + elevatorSize + 20 + 15 * m, (bounds.height / floors) * (0.5 + floors - floor), 5, 0, 2 * Math.PI, false);
+  for (var f = 0; f < mps.length; ++f) {
+    var mm = mps[f];
+    for (var m = 0; m < mm.length; ++m) {
+      ctx.arc(elevator.x + elevatorSize + 20 + 15 * m, (bounds.height / floors) * (0.5 + floors - (f + 1)), 5, 0, 2 * Math.PI, false);
+      ctx.closePath();
+      ctx.fill();
+    }
   }
-  ctx.closePath();
-  ctx.fill();
 }
 
 function paintBuilding() {
@@ -53,9 +59,7 @@ function paint() {
   ctx.clearRect(0,0,canvas.width, canvas.height);
   paintBuilding();
   paintElevator(elevator);
-  paintMeeple(1, 4);
-  paintMeeple(3, 2);
-  paintMeeple(7, 6);
+  paintMeeple(meeple);
 }
 
 setInterval(function (){
