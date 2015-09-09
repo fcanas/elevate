@@ -30,6 +30,15 @@ function paintElevator(e) {
   ctx.fillRect(e.x, e.y, elevatorSize, elevatorSize);
 }
 
+function paintMeeple(floor, number) {
+  ctx.fillStyle = 'red';
+  ctx.beginPath();
+  for (var m = 0; m < number; ++m) {
+    ctx.arc(elevator.x + elevatorSize + 20 + 15 * m, (bounds.height / floors) * (0.5 + floors - floor), 5, 0, 2 * Math.PI, false);
+  }
+  ctx.fill();
+}
+
 function paintBuilding() {
   // floors
   ctx.fillStyle = 'lightgray';
@@ -43,6 +52,9 @@ function paint() {
   ctx.clearRect(0,0,canvas.width, canvas.height);
   paintBuilding();
   paintElevator(elevator);
+  paintMeeple(1, 4);
+  paintMeeple(3, 2);
+  paintMeeple(7, 6);
 }
 
 setInterval(function (){
