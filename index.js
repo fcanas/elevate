@@ -36,6 +36,7 @@ function paintMeeple(floor, number) {
   for (var m = 0; m < number; ++m) {
     ctx.arc(elevator.x + elevatorSize + 20 + 15 * m, (bounds.height / floors) * (0.5 + floors - floor), 5, 0, 2 * Math.PI, false);
   }
+  ctx.closePath();
   ctx.fill();
 }
 
