@@ -9,12 +9,36 @@ var elevatorSize = bounds.height / floors;
 var driverPower = 0;
 
 // [floor][person] -> target floor
-var meeple = [[4,5,2], [], [9,1], [], [12, 9, 3, 1], [], [], [], [], [2,3,1,1]];
+var meeple = [[4,5,2], [], [9,1], [], [12, 9, 3, 1],
+              [], [], [], [], [2,3,1,1],
+              [], [], [], [], []];
 
-elevator = {
+var elevator = {
   x: 100,
-  y: 100
+  y: 100,
+  meeple: []
 };
+
+function floorAtY(y) {
+  return floors - Math.floor(y / elevatorSize) - 1;
+}
+
+function load(e, m) {
+  var newE = e;
+  var newM = m;
+  var floor = floorAtY(e.y);
+  var meepleAtFloor = newM[floor];
+  newM[floor] = new Array();
+  newE.meeple = newE.meeple.concat(meepleAtFloor);
+  return [newE, newM];
+}
+
+function unload(e) {
+  var out = e;
+  var floor = floorAtY(out.y);
+  out.meeple = out.meeple.filter(function(m) { return m != floor; });
+  return out;
+}
 
 function tick(e) {
   var out = e;
@@ -52,9 +76,11 @@ function paintMeeple(mps) {
 function paintBuilding() {
   // floors
   ctx.fillStyle = 'lightgray';
+  ctx.font = '16pt sans-serif';
   var floorHeight = bounds.height / floors;
   for (var f = floors; f > 0; --f) {
     ctx.fillRect(0, f * floorHeight, bounds.width, 2);
+    ctx.fillText('' + floors - f, 0, f * floorHeight - floorHeight / 2 + 5);
   }
 }
 
@@ -82,6 +108,9 @@ document.onkeydown = function(e) {
       break;
     case 32:// space
       // open door
+      elevator = unload(elevator);
+      [elevator, meeple] = load(elevator, meeple);
+      console.log(elevator.meeple);
       break;
     default:
   }
