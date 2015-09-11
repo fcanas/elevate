@@ -73,7 +73,17 @@ function paintMeeple(mps) {
   }
 }
 
-function paintBuilding() {
+function paintCallFloors(elevator) {
+  ctx.fillStyle = 'rgba(254, 165, 40, 0.3)';
+  var floorHeight = bounds.height / floors;
+  for (var index = 0; index < elevator.meeple.length; ++index) {
+    var floor = elevator.meeple[index];
+    var floorY = bounds.height - (floor + 1) * floorHeight;
+    ctx.fillRect(0, floorY, bounds.width, floorHeight);
+  }
+}
+
+function paintBuilding(elevator) {
   // floors
   ctx.fillStyle = 'lightgray';
   ctx.font = '16pt sans-serif';
@@ -87,6 +97,7 @@ function paintBuilding() {
 function paint() {
   ctx.clearRect(0,0,canvas.width, canvas.height);
   paintBuilding();
+  paintCallFloors(elevator);
   paintElevator(elevator);
   paintMeeple(meeple);
 }
