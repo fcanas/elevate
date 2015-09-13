@@ -2,7 +2,7 @@ var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext('2d');
 var bounds = {width: canvas.width, height: canvas.height};
 
-var floors = 15;
+var floors = 20;
 
 var elevatorSize = bounds.height / floors;
 
@@ -11,6 +11,7 @@ var driverPower = 0;
 // [floor][person] -> target floor
 var meeple = [[4,5,2], [], [9,1], [], [12, 9, 3, 1],
               [], [], [], [], [2,3,1,1],
+              [], [], [], [], [],
               [], [], [], [], []];
 
 var elevator = {
@@ -132,7 +133,16 @@ function paint() {
 setInterval(function() {
   elevator = tick(elevator);
   paint();
-}, 1 / 60);
+}, (1 / 60) * 1000);
+
+function randomFloor() {
+  return Math.floor(Math.random() * floors);
+}
+
+setInterval(function() {
+  var meepleFloor = randomFloor();
+  meeple[meepleFloor].push(randomFloor());
+}, 6 * 1000);
 
 document.onkeydown = function(e) {
   switch (e.keyCode) {
