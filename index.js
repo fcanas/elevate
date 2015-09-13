@@ -20,7 +20,7 @@ var elevator = {
 };
 
 function floorAtY(y) {
-  return floors - Math.floor(y / elevatorSize) - 1;
+  return floors - Math.floor((y + elevatorSize / 2) / elevatorSize) - 1;
 }
 
 function load(e, m) {
