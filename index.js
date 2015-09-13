@@ -3,6 +3,7 @@ var ctx = canvas.getContext('2d');
 var bounds = {width: canvas.width, height: canvas.height};
 
 var floors = 20;
+var autopilot = true;
 
 var elevatorSize = bounds.height / floors;
 
@@ -17,11 +18,16 @@ var meeple = [[4,5,2], [], [9,1], [], [12, 9, 3, 1],
 var elevator = {
   x: bounds.width / 2 - elevatorSize / 2,
   y: 100,
-  meeple: []
+  meeple: [],
+  lastDirection: 0,
 };
 
 function floorAtY(y) {
   return floors - Math.floor((y + elevatorSize / 2) / elevatorSize) - 1;
+}
+
+function positionForFloor(f) {
+  return ((floors - 1) - f) * elevatorSize;
 }
 
 function load(e, m, up) {
@@ -45,10 +51,24 @@ function unload(e) {
 
 function tick(e) {
   var out = e;
+
+  if (autopilot) {
+    var targetFloor = floorAtY(e.y);
+    var targetPosition = positionForFloor(targetFloor);
+    var difference = targetPosition - e.y;
+    if (Math.abs(difference) > 2) {
+      driverPower = e.lastDirection * 2;
+    } else {
+      driverPower = 0;
+      autopilot = false;
+    }
+  }
+
   if ((out.y < (canvas.height - elevatorSize) && driverPower > 0) ||
       (out.y > 0 && driverPower < 0)) {
     out.y += driverPower;
   }
+  out.lastDirection = driverPower / Math.abs(driverPower);
   return out;
 }
 
@@ -145,6 +165,7 @@ setInterval(function() {
 }, 6 * 1000);
 
 document.onkeydown = function(e) {
+  autopilot = false;
   switch (e.keyCode) {
     case 78:// n
     case 40:// down arrow
@@ -175,5 +196,5 @@ document.onkeydown = function(e) {
 };
 
 document.onkeyup = function() {
-  driverPower = 0;
+  autopilot = true;
 };
