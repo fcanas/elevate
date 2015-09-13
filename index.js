@@ -23,13 +23,15 @@ function floorAtY(y) {
   return floors - Math.floor((y + elevatorSize / 2) / elevatorSize) - 1;
 }
 
-function load(e, m) {
+function load(e, m, up) {
   var newE = e;
   var newM = m;
   var floor = floorAtY(e.y);
   var meepleAtFloor = newM[floor];
-  newM[floor] = new Array();
-  newE.meeple = newE.meeple.concat(meepleAtFloor);
+  var [goingDown, goingUp] = splitMeeple(meepleAtFloor, floor);
+  var [loading, staying] = up ? [goingUp, goingDown] : [goingDown, goingUp];
+  newM[floor] = staying;
+  newE.meeple = newE.meeple.concat(loading);
   return [newE, newM];
 }
 
@@ -55,18 +57,22 @@ function paintElevator(e) {
   ctx.fillRect(e.x, e.y, elevatorSize, elevatorSize);
 }
 
+function splitMeeple(meepleAtFloor, floor) {
+  return meepleAtFloor.reduce(function(u, v) {
+    // console.log(u);
+    if (v < floor) {
+      u[0].push(v);
+    } else {
+      u[1].push(v);
+    }
+    return u;
+  }, [new Array(), new Array()]);
+}
+
 function paintMeeple(mps) {
   for (var floor = 0; floor < mps.length; ++floor) {
     var meepleAtFloor = mps[floor];
-    [goingDown, goingUp] = meepleAtFloor.reduce(function(u, v) {
-      // console.log(u);
-      if (v < floor) {
-        u[0].push(v);
-      } else {
-        u[1].push(v);
-      }
-      return u;
-    }, [new Array(), new Array()]);
+    [goingDown, goingUp] = splitMeeple(meepleAtFloor, floor);
     ctx.beginPath();
     ctx.fillStyle = 'red';
     for (var m = 0; m < goingDown.length; ++m) {
@@ -143,6 +149,16 @@ document.onkeydown = function(e) {
       elevator = unload(elevator);
       [elevator, meeple] = load(elevator, meeple);
       console.log(elevator.meeple);
+      break;
+    case 222:// '
+      // Going Up
+      elevator = unload(elevator);
+      [elevator, meeple] = load(elevator, meeple, true);
+      break;
+    case 191:// /
+      // Going Down
+      elevator = unload(elevator);
+      [elevator, meeple] = load(elevator, meeple, false);
       break;
     default:
   }
