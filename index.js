@@ -14,7 +14,7 @@ var meeple = [[4,5,2], [], [9,1], [], [12, 9, 3, 1],
               [], [], [], [], []];
 
 var elevator = {
-  x: 100,
+  x: bounds.width / 2 - elevatorSize / 2,
   y: 100,
   meeple: []
 };
@@ -56,17 +56,35 @@ function paintElevator(e) {
 }
 
 function paintMeeple(mps) {
-  ctx.fillStyle = 'red';
-  ctx.beginPath();
-  for (var f = 0; f < mps.length; ++f) {
-    var mm = mps[f];
-    for (var m = 0; m < mm.length; ++m) {
+  for (var floor = 0; floor < mps.length; ++floor) {
+    var meepleAtFloor = mps[floor];
+    [goingDown, goingUp] = meepleAtFloor.reduce(function(u, v) {
+      // console.log(u);
+      if (v < floor) {
+        u[0].push(v);
+      } else {
+        u[1].push(v);
+      }
+      return u;
+    }, [new Array(), new Array()]);
+    ctx.beginPath();
+    ctx.fillStyle = 'red';
+    for (var m = 0; m < goingDown.length; ++m) {
       ctx.arc(elevator.x + elevatorSize + 20 + 15 * m,
-              (bounds.height / floors) * (0.5 + floors - (f + 1)),
+              (bounds.height / floors) * (0.5 + floors - (floor + 1)),
               5, 0, 2 * Math.PI, false);
       ctx.closePath();
-      ctx.fill();
     }
+    ctx.fill();
+    ctx.beginPath();
+    ctx.fillStyle = 'green';
+    for (var m = 0; m < goingUp.length; ++m) {
+      ctx.arc(elevator.x - 20 - 15 * m,
+              (bounds.height / floors) * (0.5 + floors - (floor + 1)),
+              5, 0, 2 * Math.PI, false);
+      ctx.closePath();
+    }
+    ctx.fill();
   }
 }
 
