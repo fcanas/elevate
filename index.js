@@ -50,9 +50,6 @@ function tick(e) {
 }
 
 function paintElevator(e) {
-  // track
-  ctx.fillStyle = 'lightgray';
-  ctx.fillRect(e.x + Math.floor(elevatorSize / 2), 0, 2, bounds.height);
   // car
   ctx.fillStyle = 'black';
   ctx.fillRect(e.x, e.y, elevatorSize, elevatorSize);
@@ -84,19 +81,25 @@ function paintCallFloors(elevator) {
 }
 
 function paintBuilding(elevator) {
+  // track
+  ctx.fillStyle = 'darkgray';
+  ctx.fillRect(elevator.x, 0, elevatorSize, bounds.height);
   // floors
-  ctx.fillStyle = 'lightgray';
   ctx.font = '16pt sans-serif';
   var floorHeight = bounds.height / floors;
+  ctx.textAlign = 'center';
   for (var f = floors; f > 0; --f) {
+    ctx.fillStyle = 'lightgray';
     ctx.fillRect(0, f * floorHeight, bounds.width, 2);
-    ctx.fillText('' + floors - f, 0, f * floorHeight - floorHeight / 2 + 5);
+    ctx.fillStyle = 'white';
+    ctx.fillText('' + floors - f,
+      elevator.x + elevatorSize / 2, f * floorHeight - floorHeight / 2 + 5);
   }
 }
 
 function paint() {
   ctx.clearRect(0,0,canvas.width, canvas.height);
-  paintBuilding();
+  paintBuilding(elevator);
   paintCallFloors(elevator);
   paintElevator(elevator);
   paintMeeple(meeple);
