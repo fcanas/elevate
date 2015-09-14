@@ -165,7 +165,7 @@ setInterval(function() {
     targetFloor = randomFloor();
   } while (targetFloor == meepleFloor);
   meeple[meepleFloor].push(targetFloor);
-}, 6 * 1000);
+}, 4 * 1000);
 
 document.onkeydown = function(e) {
   var newElevator = elevator;
