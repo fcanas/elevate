@@ -1,5 +1,5 @@
 var canvas = document.querySelector('canvas');
-var ctx = canvas.getContext('2d');
+var context = canvas.getContext('2d');
 var bounds = {width: canvas.width, height: canvas.height};
 
 var floors = 20;
@@ -71,7 +71,7 @@ function tick(e) {
   return out;
 }
 
-function paintElevator(e) {
+function paintElevator(ctx, e) {
   // car
   ctx.fillStyle = 'black';
   ctx.fillRect(e.x, e.y, elevatorSize, elevatorSize);
@@ -89,7 +89,7 @@ function splitMeeple(meepleAtFloor, floor) {
   }, [new Array(), new Array()]);
 }
 
-function paintMeeple(mps) {
+function paintMeeple(ctx, mps) {
   for (var floor = 0; floor < mps.length; ++floor) {
     var meepleAtFloor = mps[floor];
     [goingDown, goingUp] = splitMeeple(meepleAtFloor, floor);
@@ -114,7 +114,7 @@ function paintMeeple(mps) {
   }
 }
 
-function paintCallFloors(elevator) {
+function paintCallFloors(ctx, elevator) {
   ctx.fillStyle = 'rgba(254, 165, 40, 0.3)';
   var floorHeight = bounds.height / floors;
   for (var index = 0; index < elevator.meeple.length; ++index) {
@@ -124,7 +124,7 @@ function paintCallFloors(elevator) {
   }
 }
 
-function paintBuilding(elevator) {
+function paintBuilding(ctx, elevator) {
   // track
   ctx.fillStyle = 'darkgray';
   ctx.fillRect(elevator.x, 0, elevatorSize, bounds.height);
@@ -141,17 +141,17 @@ function paintBuilding(elevator) {
   }
 }
 
-function paint() {
+function paint(ctx) {
   ctx.clearRect(0,0,canvas.width, canvas.height);
-  paintBuilding(elevator);
-  paintCallFloors(elevator);
-  paintElevator(elevator);
-  paintMeeple(meeple);
+  paintBuilding(ctx, elevator);
+  paintCallFloors(ctx, elevator);
+  paintElevator(ctx, elevator);
+  paintMeeple(ctx, meeple);
 }
 
 setInterval(function() {
   elevator = tick(elevator);
-  paint();
+  paint(context);
 }, (1 / 60) * 1000);
 
 function randomFloor() {
