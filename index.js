@@ -160,7 +160,11 @@ function randomFloor() {
 
 setInterval(function() {
   var meepleFloor = randomFloor();
-  meeple[meepleFloor].push(randomFloor());
+  var targetFloor;
+  do {
+    targetFloor = randomFloor();
+  } while (targetFloor == meepleFloor);
+  meeple[meepleFloor].push(targetFloor);
 }, 6 * 1000);
 
 document.onkeydown = function(e) {
