@@ -3,11 +3,8 @@ var ctx = canvas.getContext('2d');
 var bounds = {width: canvas.width, height: canvas.height};
 
 var floors = 20;
-var autopilot = true;
 
 var elevatorSize = bounds.height / floors;
-
-var driverPower = 0;
 
 // [floor][person] -> target floor
 var meeple = [[4,5,2], [], [9,1], [], [12, 9, 3, 1],
@@ -17,9 +14,11 @@ var meeple = [[4,5,2], [], [9,1], [], [12, 9, 3, 1],
 
 var elevator = {
   x: bounds.width / 2 - elevatorSize / 2,
-  y: 100,
+  y: 85,
   meeple: [],
-  lastDirection: 0,
+  autopilot: true,
+  lastDirection: 1,
+  driverPower: 0,
 };
 
 function floorAtY(y) {
@@ -52,23 +51,23 @@ function unload(e) {
 function tick(e) {
   var out = e;
 
-  if (autopilot) {
+  if (out.autopilot) {
     var targetFloor = floorAtY(e.y);
     var targetPosition = positionForFloor(targetFloor);
     var difference = targetPosition - e.y;
     if (Math.abs(difference) > 2) {
-      driverPower = e.lastDirection * 2;
+      out.driverPower = e.lastDirection * 2;
     } else {
-      driverPower = 0;
-      autopilot = false;
+      out.driverPower = 0;
+      out.autopilot = false;
     }
   }
 
-  if ((out.y < (canvas.height - elevatorSize) && driverPower > 0) ||
-      (out.y > 0 && driverPower < 0)) {
-    out.y += driverPower;
+  if ((out.y < (canvas.height - elevatorSize) && out.driverPower > 0) ||
+      (out.y > 0 && out.driverPower < 0)) {
+    out.y += out.driverPower;
   }
-  out.lastDirection = driverPower / Math.abs(driverPower);
+  out.lastDirection = out.driverPower / Math.abs(out.driverPower);
   return out;
 }
 
@@ -165,36 +164,38 @@ setInterval(function() {
 }, 6 * 1000);
 
 document.onkeydown = function(e) {
-  autopilot = false;
+  var newElevator = elevator;
+  newElevator.autopilot = false;
   switch (e.keyCode) {
     case 78:// n
     case 40:// down arrow
-      driverPower = 2;
+      newElevator.driverPower = 2;
       break;
     case 80:// p
     case 38:// up arrow
-      driverPower = -2;
+      newElevator.driverPower = -2;
       break;
     case 32:// space
       // open door
-      elevator = unload(elevator);
-      [elevator, meeple] = load(elevator, meeple);
-      console.log(elevator.meeple);
+      newElevator = unload(newElevator);
+      [newElevator, meeple] = load(newElevator, meeple);
       break;
     case 222:// '
       // Going Up
-      elevator = unload(elevator);
-      [elevator, meeple] = load(elevator, meeple, true);
+      newElevator = unload(newElevator);
+      [newElevator, meeple] = load(newElevator, meeple, true);
       break;
     case 191:// /
       // Going Down
-      elevator = unload(elevator);
-      [elevator, meeple] = load(elevator, meeple, false);
+      newElevator = unload(newElevator);
+      [newElevator, meeple] = load(newElevator, meeple, false);
       break;
     default:
   }
+  // Wrtite to world
+  elevator = newElevator;
 };
 
 document.onkeyup = function() {
-  autopilot = true;
+  elevator.autopilot = true;
 };
