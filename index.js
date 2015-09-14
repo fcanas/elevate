@@ -7,8 +7,8 @@ var floors = 20;
 var elevatorSize = bounds.height / floors;
 
 // [floor][person] -> target floor
-var meeple = [[4,5,2], [], [9,1], [], [12, 9, 3, 1],
-              [], [], [], [], [2,3,1,1],
+var meeple = [[], [], [], [], [],
+              [], [], [], [], [],
               [], [], [], [], [],
               [], [], [], [], []];
 
