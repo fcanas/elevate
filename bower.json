@@ -1,0 +1,26 @@
+{
+  "name": "elevate",
+  "main": "index.js",
+  "version": "0.0.0",
+  "authors": [
+    "Fabian Canas <fcanas@gmail.com>"
+  ],
+  "description": "take a ride on an elevator",
+  "keywords": [
+    "game",
+    "programming",
+    "javascript"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ace-builds-bower-patched": "~1.2.2"
+  }
+}

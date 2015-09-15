@@ -1,7 +1,27 @@
 <!doctype html>
 <html>
-  <body>
-    <table style='float: right; border: 1px solid black;'>
+<head>
+<style type="text/css" media="screen">
+#editor {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+}
+.left {
+  float: left;
+  width: 50%;
+}
+.right {
+  height: 100pt;
+  float: right;
+  width: 50%;
+}
+</style>
+</head>
+<body>
+  <div class='left'>
+    <table style='float: left; border: 1px solid black;'>
       <th>Key<th><th>Action</th>
       <tr><td>&#x2191;</td><td>Drive Up</td></tr>
       <tr><td>&#x2193;</td><td>Drive Down</td></tr>
@@ -9,7 +29,53 @@
       <tr><td>/</td><td>Going Down</td></tr>
     </table>
     <canvas width='400' height='700' style='display: block; margin: 0 auto;'></canvas>
-    <script src="index.js">
-    </script>
-  </body>
+  </div>
+  <div class='right'>
+    <div id="editor">
+      // API Listing
+      //
+      // Go to the indicated floor
+      // function goToFloor(floor)
+      //
+      // Opens the elevator doors, unloading all current passengers.
+      // function openDoors()
+      //
+      // Loads all the people at the current floor wishing to go UP
+      // function ringGoingUp()
+      //
+      // Loads all the people at the current floor wishing to go DOWN
+      // function ringGoingDown()
+
+      // Someone at indicated floor wants to go down
+      function callGoingDown(atFloor) {
+        // not implemented
+      }
+
+      // Someone at indicated floor wants to go up
+      function callGoingUp(atFloor) {
+        // not implemented
+      }
+
+      // Someone inside the elevator requested the indicated floor
+      function callToFloor(floor) {
+        // not implemented
+      }
+
+      // The elevator has arrived at the indicated floor, and it would be
+      // appropriate to open the doors and ring for a direction.
+      function arrivedAtFloor() {
+
+      }
+    </div>
+  </div>
+
+  <script src="index.js"></script>
+  <script src="bower_components/ace-builds-bower-patched/src-min-noconflict/ace.js" charset="utf-8"></script>
+  <script>
+  var editor = ace.edit("editor");
+  editor.setTheme("ace/theme/monokai");
+  editor.getSession().setMode("ace/mode/javascript");
+  document.getElementById('editor').style.fontSize='14px';
+  </script>
+</body>
 </html>
