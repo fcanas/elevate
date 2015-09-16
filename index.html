@@ -32,50 +32,54 @@
   </div>
   <div class='right'>
     <div id="editor">
-      // API Listing
-      //
-      // Go to the indicated floor
-      // function goToFloor(floor)
-      //
-      // Opens the elevator doors, unloading all current passengers.
-      // function openDoors()
-      //
-      // Loads all the people at the current floor wishing to go UP
-      // function ringGoingUp()
-      //
-      // Loads all the people at the current floor wishing to go DOWN
-      // function ringGoingDown()
+// API Listing
+//
+// Go to the indicated floor
+// function goToFloor(floor)
+//
+// Opens the elevator doors, unloading all current passengers.
+// function openDoors()
+//
+// Loads all the people at the current floor wishing to go UP
+// function ringGoingUp()
+//
+// Loads all the people at the current floor wishing to go DOWN
+// function ringGoingDown()
 
-      // Someone at indicated floor wants to go down
-      function callGoingDown(atFloor) {
-        // not implemented
-      }
+driver = {
+  // Someone at indicated floor wants to go down
+  callGoingDown: function (atFloor) {
+    console.log('callGoingDown not implemented : ' + atFloor);
+  },
 
-      // Someone at indicated floor wants to go up
-      function callGoingUp(atFloor) {
-        // not implemented
-      }
+  // Someone at indicated floor wants to go up
+  callGoingUp: function (atFloor) {
+    console.log('callGoingUp not implemented : ' + atFloor);
+  },
 
-      // Someone inside the elevator requested the indicated floor
-      function callToFloor(floor) {
-        // not implemented
-      }
+  // Someone inside the elevator requested the indicated floor
+  callToFloor: function (floor) {
+    console.log('callToFloor not implemented : ' + floor);
+  },
 
-      // The elevator has arrived at the indicated floor, and it would be
-      // appropriate to open the doors and ring for a direction.
-      function arrivedAtFloor() {
-
-      }
+  // The elevator has arrived at the indicated floor, and it would be
+  // appropriate to open the doors and ring for a direction.
+  arrivedAtFloor: function (floor) {
+    console.log('arrivedAtFloor not implemented : ' + floor);
+  }
+}
     </div>
   </div>
 
   <script src="index.js"></script>
+  <script src="graphics.js"></script>
   <script src="bower_components/ace-builds-bower-patched/src-min-noconflict/ace.js" charset="utf-8"></script>
   <script>
   var editor = ace.edit("editor");
   editor.setTheme("ace/theme/monokai");
   editor.getSession().setMode("ace/mode/javascript");
   document.getElementById('editor').style.fontSize='14px';
+  eval(editor.getValue());
   </script>
 </body>
 </html>
