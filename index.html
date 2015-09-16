@@ -27,6 +27,8 @@
       <tr><td>&#x2193;</td><td>Drive Down</td></tr>
       <tr><td>'</td><td>Going Up</td></tr>
       <tr><td>/</td><td>Going Down</td></tr>
+      <tr><td>&#x2318;R</td><td>Run Program</td></tr>
+
     </table>
     <canvas width='400' height='700' style='display: block; margin: 0 auto;'></canvas>
   </div>
@@ -70,16 +72,9 @@ driver = {
 }
     </div>
   </div>
-
   <script src="index.js"></script>
   <script src="graphics.js"></script>
   <script src="bower_components/ace-builds-bower-patched/src-min-noconflict/ace.js" charset="utf-8"></script>
-  <script>
-  var editor = ace.edit("editor");
-  editor.setTheme("ace/theme/monokai");
-  editor.getSession().setMode("ace/mode/javascript");
-  document.getElementById('editor').style.fontSize='14px';
-  eval(editor.getValue());
-  </script>
+  <script src="editor.js"></script>
 </body>
 </html>
