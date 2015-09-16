@@ -1,0 +1,12 @@
+🔨
+
+npm i
+bower i
+
+npm run dev
+
+python -m SimpleHTTPServer
+
+visit localhost:8000
+
+🍞
