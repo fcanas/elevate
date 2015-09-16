@@ -1,7 +1,7 @@
 function paintMeeple(ctx, mps) {
   for (var floor = 0; floor < mps.length; ++floor) {
     var meepleAtFloor = mps[floor];
-    [goingDown, goingUp] = splitMeeple(meepleAtFloor, floor);
+    var [goingDown, goingUp] = splitMeeple(meepleAtFloor, floor);
     ctx.beginPath();
     ctx.fillStyle = 'red';
     for (var m = 0; m < goingDown.length; ++m) {
