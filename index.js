@@ -81,7 +81,6 @@ function paintElevator(ctx, e) {
 
 function splitMeeple(meepleAtFloor, floor) {
   return meepleAtFloor.reduce(function(u, v) {
-    // console.log(u);
     if (v < floor) {
       u[0].push(v);
     } else {
@@ -144,9 +143,6 @@ document.onkeydown = function(e) {
       newElevator = unload(newElevator);
       [newElevator, meeple] = load(newElevator, meeple, false);
       break;
-    case 82: // r
-      console.log('Code Reloaded?');
-      eval(editor.getValue());
     default:
   }
   // Wrtite to world

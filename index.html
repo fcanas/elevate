@@ -27,49 +27,14 @@
       <tr><td>&#x2193;</td><td>Drive Down</td></tr>
       <tr><td>'</td><td>Going Up</td></tr>
       <tr><td>/</td><td>Going Down</td></tr>
-      <tr><td>&#x2318;R</td><td>Run Program</td></tr>
+      <tr><td>Ctrl-R</td><td>Run Program</td></tr>
+      <tr><td>Ctrl-S</td><td>Save Program</td></tr>
 
     </table>
     <canvas width='400' height='700' style='display: block; margin: 0 auto;'></canvas>
   </div>
   <div class='right'>
     <div id="editor">
-// API Listing
-//
-// Go to the indicated floor
-// function goToFloor(floor)
-//
-// Opens the elevator doors, unloading all current passengers.
-// function openDoors()
-//
-// Loads all the people at the current floor wishing to go UP
-// function ringGoingUp()
-//
-// Loads all the people at the current floor wishing to go DOWN
-// function ringGoingDown()
-
-driver = {
-  // Someone at indicated floor wants to go down
-  callGoingDown: function (atFloor) {
-    console.log('callGoingDown not implemented : ' + atFloor);
-  },
-
-  // Someone at indicated floor wants to go up
-  callGoingUp: function (atFloor) {
-    console.log('callGoingUp not implemented : ' + atFloor);
-  },
-
-  // Someone inside the elevator requested the indicated floor
-  callToFloor: function (floor) {
-    console.log('callToFloor not implemented : ' + floor);
-  },
-
-  // The elevator has arrived at the indicated floor, and it would be
-  // appropriate to open the doors and ring for a direction.
-  arrivedAtFloor: function (floor) {
-    console.log('arrivedAtFloor not implemented : ' + floor);
-  }
-}
     </div>
   </div>
   <script src="dist/index.js"></script>
