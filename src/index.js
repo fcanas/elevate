@@ -1,9 +1,11 @@
+import {driver} from './driver';
+import {paint} from './graphics';
+
 var canvas = document.querySelector('canvas');
 var context = canvas.getContext('2d');
 var bounds = {width: canvas.width, height: canvas.height};
 
 var floors = 20;
-
 var elevatorSize = bounds.height / floors;
 
 // [floor][person] -> target floor
@@ -19,6 +21,7 @@ var elevator = {
   autopilot: true,
   lastDirection: 1,
   driverPower: 0,
+  elevatorSize: elevatorSize
 };
 
 function floorAtY(y) {
@@ -73,11 +76,6 @@ function tick(e) {
   return out;
 }
 
-function paintElevator(ctx, e) {
-  // car
-  ctx.fillStyle = 'black';
-  ctx.fillRect(e.x, e.y, elevatorSize, elevatorSize);
-}
 
 function splitMeeple(meepleAtFloor, floor) {
   return meepleAtFloor.reduce(function(u, v) {
@@ -89,11 +87,6 @@ function splitMeeple(meepleAtFloor, floor) {
     return u;
   }, [new Array(), new Array()]);
 }
-
-setInterval(function() {
-  elevator = tick(elevator);
-  paint(context);
-}, (1 / 60) * 1000);
 
 function randomFloor() {
   return Math.floor(Math.random() * floors);
@@ -112,8 +105,6 @@ function newMeepleCall() {
     driver.callGoingUp(meepleFloor);
   }
 }
-
-setInterval(newMeepleCall, 4 * 1000);
 
 document.onkeydown = function(e) {
   var newElevator = elevator;
@@ -172,3 +163,15 @@ function openDoors() {
 function goToFloor(floor) {
   console.log('not implemented');
 }
+
+function start() {
+  setInterval(newMeepleCall, 4 * 1000);
+
+  setInterval(function() {
+    elevator = tick(elevator);
+    paint(canvas, elevator, bounds, floors, meeple);
+  }, (1 / 60) * 1000);
+}
+
+export {start};
+export {splitMeeple};

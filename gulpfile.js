@@ -1,11 +1,15 @@
 var gulp = require('gulp');
-var babel = require('gulp-babel');
+var browserify = require('browserify');
+var babelify = require('babelify');
+var fs = require('fs');
 
-gulp.task('compile', function(src) {
-  return gulp.src(['index.js', 'graphics.js', 'editor.js'])
-  .pipe(gulp.dest('dist'));
+gulp.task('compile', function() {
+  return browserify('src/app.js', {debug: true})
+  .transform(babelify)
+  .bundle()
+  .pipe(fs.createWriteStream('dist/app.js'));
 });
 
 gulp.task('dev', function() {
-  return gulp.watch(['index.js', 'graphics.js', 'editor.js'], ['compile']);
+  return gulp.watch(['src/**/*.js'], ['compile']);
 });
